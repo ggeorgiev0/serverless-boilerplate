@@ -1,0 +1,41 @@
+service:
+  name: pool-party-backend
+
+plugins:
+  - serverless-bundle
+  - serverless-pseudo-parameters
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  memorySize: 256
+  stage: ${opt:stage, 'dev'}
+  region: eu-west-1
+  environment:
+    PRODUCTS_TABLE_NAME: ${self:custom.ProductsTable.name}
+  iamRoleStatements:
+    - ${file(iam/ProductsTableIAM.yml):ProductsTableIAM}
+
+resources:
+  Resources:
+    ProductsTable: ${file(resources/ProductsTable.yml):ProductsTable}
+
+functions:
+  createProduct:
+    handler: src/handlers/product/createProduct.handler
+    events:
+      - http:
+          method: POST
+          path: /product
+    
+  getProduct:
+    handler: src/handlers/product/getProduct.handler
+    events:
+      - http:
+          method: GET
+          path: /product/{id}
+
+custom:
+  ProductsTable:
+    name: !Ref ProductsTable
+    arn: !GetAtt ProductsTable.Arn

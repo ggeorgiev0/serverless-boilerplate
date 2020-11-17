@@ -1,0 +1,5 @@
+docs/*
+iam/*
+resources/*
+*.json
+node_modules/*

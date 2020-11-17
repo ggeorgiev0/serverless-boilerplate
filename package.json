@@ -1,0 +1,37 @@
+{
+  "name": "pool-party-backend",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "code:check": "yarn code:lint && yarn code:prettier",
+    "code:format": "yarn code:lint --fix --quiet && yarn code:prettier --write",
+    "code:lint": "eslint .",
+    "code:prettier": "prettier --check \"**/*.js*\""
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.2.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^7.13.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "prettier": "^2.1.2",
+    "serverless-bundle": "^4.0.1",
+    "serverless-pseudo-parameters": "^2.5.0",
+    "webpack": "^4.35.2"
+  },
+  "dependencies": {
+    "@middy/core": "^1.4.0",
+    "@middy/http-error-handler": "^1.4.0",
+    "@middy/http-event-normalizer": "^1.4.0",
+    "@middy/http-json-body-parser": "^1.4.0",
+    "@middy/validator": "^1.4.0",
+    "aws-sdk": "^2.793.0",
+    "http-errors": "^1.8.0",
+    "uuid": "^8.3.1"
+  }
+}
