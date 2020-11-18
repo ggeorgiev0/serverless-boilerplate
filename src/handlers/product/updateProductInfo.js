@@ -43,13 +43,20 @@ const updateProductInfo = async (event) => {
   let updatedName = oldName;
 
   if (quantity) updatedQuantity += quantity;
-  if (isActive !== oldIsActive) updatedIsActive = isActive;
+  if (isActive !== undefined && isActive !== oldIsActive) updatedIsActive = isActive;
   if (productType && productType !== oldProductType) updatedProductType = productType;
-  if (isInKilos !== oldIsInKilos) updatedisInKilos = isInKilos;
+  if (isInKilos !== undefined && isInKilos !== oldIsInKilos) updatedisInKilos = isInKilos;
   if (expiryDate && new Date(expiryDate) !== new Date(oldExpiryDate)) updatedExpiryDate = new Date(expiryDate).toISOString();
   if (costInRealCurrency && costInRealCurrency !== oldCostInRealCurrency) updatedCostInRealCurrency = costInRealCurrency;
   if (costInVirtualCurrency && costInVirtualCurrency !== oldCostInVirtualCurrency) updatedCostInVirtualCurrency = costInVirtualCurrency;
   if (productName && productName !== oldName) updatedName = productName;
+
+  if (updatedQuantity < 0) updatedQuantity = 0;
+  if (updatedProductType !== 'beverage' && updatedProductType !== 'snack' && updatedProductType !== 'cookable') {
+    throw new createError.Forbidden('Product type should either be a beverage, snack or cookable!');
+  }
+  if (updatedCostInRealCurrency < 0) updatedCostInRealCurrency = 0;
+  if (updatedCostInVirtualCurrency < 0) updatedCostInVirtualCurrency = 0;
 
   const params = {
     TableName: process.env.PRODUCTS_TABLE_NAME,
