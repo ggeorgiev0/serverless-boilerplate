@@ -4,13 +4,15 @@ import commonMiddleware from '../../lib/commonMiddleware';
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-export const getProductById = async (id)  => {
+export const getProductById = async (id) => {
   let product;
   try {
-    const result = await dynamodb.get({
-      TableName: process.env.PRODUCTS_TABLE_NAME,
-      Key: { id },
-    }).promise();
+    const result = await dynamodb
+      .get({
+        TableName: process.env.PRODUCTS_TABLE_NAME,
+        Key: { id },
+      })
+      .promise();
     product = result.Item;
   } catch (error) {
     console.error(error);
