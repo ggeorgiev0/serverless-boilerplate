@@ -12,16 +12,17 @@ const createProduct = async (event) => {
     name,
     quantity,
     isInKilos,
+    isActive,
     costInRealCurrency,
     costInVirtualCurrency,
     productType,
-  } = event.body;
+  } = event.body.product;
 
   if (productType !== 'beverage' && productType !== 'snack' && productType !== 'cookable') {
     throw new createError.Forbidden('Product type should either be a beverage, snack or cookable!');
   }
 
-  let { expiryDate } = event.body;
+  let { expiryDate } = event.body.product;
   const defaultExpiryDate = new Date();
   defaultExpiryDate.setDate(defaultExpiryDate.getDate() + 1);
   expiryDate = expiryDate || defaultExpiryDate;
@@ -30,8 +31,9 @@ const createProduct = async (event) => {
     id: uuid(),
     name,
     quantity,
-    expiryDate,
+    expiryDate: expiryDate.toISOString(),
     isInKilos,
+    isActive,
     productType,
     costInRealCurrency,
     costInVirtualCurrency,
@@ -56,5 +58,5 @@ const createProduct = async (event) => {
 };
 
 export const handler = commonMiddleware(createProduct).use(
-  validator({ inputSchema: createProductSchema }),
+  validator({ inputSchema: createProductSchema, useDefaults: true, }),
 );
