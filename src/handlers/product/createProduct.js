@@ -9,7 +9,7 @@ const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 const createProduct = async (event) => {
   const {
-    name,
+    productName,
     quantity,
     isInKilos,
     isActive,
@@ -29,7 +29,7 @@ const createProduct = async (event) => {
 
   const product = {
     id: uuid(),
-    name,
+    productName,
     quantity,
     expiryDate: expiryDate.toISOString(),
     isInKilos,

@@ -6,37 +6,38 @@ const schema = {
         product: {
           type: 'object',
           properties: {
-            productName: {
-              type: 'string',
-            },
             quantity: {
               type: 'number',
-            },
-            productType: {
-              type: 'string',
             },
             isActive: {
               type: 'boolean',
             },
+            productType: {
+              type: 'string',
+            },
             isInKilos: {
               type: 'boolean',
             },
+            expiryDate: {
+              type: 'string'
+            },
             costInRealCurrency: {
               type: 'number',
-              default: 0,
             },
             costInVirtualCurrency: {
               type: 'number',
-              default: 0,
+            },
+            productName: {
+              type: 'string',
             },
           },
-          required: ['productName', 'quantity', 'productType', 'isActive', 'isInKilos'],
+          required: ['quantity']
         }
       },
       required: ['product'],
-    },
+    }
   },
   required: ['body'],
-};
+}
 
 export default schema;
