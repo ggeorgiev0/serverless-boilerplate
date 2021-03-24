@@ -13,14 +13,17 @@ provider:
   region: eu-west-1
   environment:
     PRODUCTS_TABLE_NAME: ${self:custom.ProductsTable.name}
+    PRODUCTS_BUCKET_NAME: ${self:custom.ProductsBucket.name}
   iamRoleStatements:
     - ${file(iam/ProductsTableIAM.yml):ProductsTableIAM}
+    - ${file(iam/ProductsBucketIAM.yml):ProductsBucketIAM}
   apiGateway:
     shouldStartNameWithService: true
 
 resources:
   Resources:
     ProductsTable: ${file(resources/ProductsTable.yml):ProductsTable}
+    ProductsBucket: ${file(resources/ProductsBucket.yml):ProductsBucket}
 
 functions:
   createProduct:
@@ -44,7 +47,16 @@ functions:
           method: PATCH
           path: /product/{id}/update
 
+  uploadProductPicture:
+    handler: src/handlers/product/uploadProductPicture.handler
+    events:
+      - http:
+          method: PATCH
+          path: /product/{id}/picture
+
 custom:
   ProductsTable:
     name: !Ref ProductsTable
     arn: !GetAtt ProductsTable.Arn
+  ProductsBucket:
+    name: pool-party-backend-4534-${self:provider.stage}
