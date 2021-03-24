@@ -24,7 +24,7 @@ export const getProductById = async (id) => {
   return product;
 };
 
-const getAuction = async (event) => {
+const getProduct = async (event) => {
   const { id } = event.pathParameters;
   const product = await getProductById(id);
   return {
@@ -33,4 +33,4 @@ const getAuction = async (event) => {
   };
 };
 
-export const handler = commonMiddleware(getAuction);
+export const handler = commonMiddleware(getProduct);
